@@ -26,13 +26,15 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
   String pageTitle = "Smartphones";
   List<Smartphone> smartphones = [];
   final scrollController = ScrollController();
+  final textController = TextEditingController();
   final int entries = 20;
   int allEntries = 20;
   bool isLoadingMore = false;
+  String search = "";
 
   @override
   void initState() {
-    API().fetchRemoteSmartphones(0, entries).then((smartphones) {
+    API().fetchRemoteSmartphones(0, entries, search: search).then((smartphones) {
       setState(() {
         this.smartphones = smartphones;
       });
@@ -53,13 +55,16 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView.separated(itemBuilder: (context, index) {
-            if(index < smartphones!.length){
-              return _buildSmartphoneListTile(index);
+            if(index == 0) {
+              return _buildSearchTile();
+            }
+            if(index -1 < smartphones!.length){
+              return _buildSmartphoneListTile(index -1);
             } else {
-              return _buildProgressTile(index);
+              return _buildProgressTile(index -1);
             }
           }, separatorBuilder: (_, __) => Divider(),
-              itemCount: isLoadingMore ? smartphones!.length +1 : smartphones!.length ,
+              itemCount: isLoadingMore ? smartphones!.length +2 : smartphones!.length +1,
           controller: scrollController,
           physics:  const AlwaysScrollableScrollPhysics(),),
         )
@@ -73,6 +78,25 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
     return ListTile(title: Text(currentPhone.name), leading: Image.network(currentPhone.picture),);
   }
 
+  Widget _buildSearchTile(){
+    return ListTile(title: TextField(controller: textController,textInputAction: TextInputAction.search,
+      decoration: InputDecoration(
+      border: InputBorder.none,
+      prefixIcon: Icon(Icons.search),
+      hintText: 'Search ',
+      contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+    ),onSubmitted: (text) {
+        API().fetchRemoteSmartphones(0,25, search: text).then((smartphones) {
+          setState(() {
+            this.search = text;
+            this.allEntries = entries;
+            this.smartphones = smartphones;
+          });
+        });
+    },
+    ),);
+  }
+
   Widget _buildProgressTile(int index){
     return Center(child: CircularProgressIndicator(),);
   }
@@ -84,7 +108,7 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
         isLoadingMore = true;
       });
       Future.delayed(Duration(seconds: 1), () {
-        API().fetchRemoteSmartphones(allEntries, entries).then((smartphones) {
+        API().fetchRemoteSmartphones(allEntries, entries, search: search).then((smartphones) {
           setState(() {
             this.smartphones = this.smartphones + smartphones;
           });
