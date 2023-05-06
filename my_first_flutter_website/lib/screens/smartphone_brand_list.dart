@@ -105,7 +105,15 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
                     ),
                   ),
                 ),
-                ListTile(leading: CircleAvatar(child: Text(smartphones[index].score.toStringAsFixed(1))), title: Text(smartphones[index].name), trailing: Icon(Icons.arrow_forward),),
+                ListTile(leading: CircleAvatar(backgroundColor: (smartphones[index].score > 6.0) ? Color(0xff00f533) :
+                                                                (smartphones[index].score <= 6.0 && smartphones[index].score > 2.0) ? Color(0xffa3ff01) :
+                                                                (smartphones[index].score <= 2.0 && smartphones[index].score > -2.0) ? Color(0xffe5dc00) :
+                                                                (smartphones[index].score <= -2.0 && smartphones[index].score > -6.0) ? Color(0xffffa200) :
+                                                                Color(0xfff54401),
+                                                child: Text(smartphones[index].score.toStringAsFixed(1)),
+                                                foregroundColor: Colors.black),
+                          title: Text(smartphones[index].name),
+                          trailing: Icon(Icons.arrow_forward),),
               ],
             ),
       ),

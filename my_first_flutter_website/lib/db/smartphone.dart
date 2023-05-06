@@ -26,6 +26,9 @@ class Smartphone {
     double average = (energie + recycling + langlebigkeit + umweltverschmutzung + soziale_verantwortung + faire_arbeitsbedingungen + transparenz)/7;
     return average;
   }
+
+  // Color mycolor = score > 3 ? Colors.green : Colors.red;
+
   factory Smartphone.fromJson(Map<String, dynamic> json) {
     return Smartphone(
       name: json['name'],
