@@ -25,14 +25,19 @@ class SmartphoneListScreen extends StatefulWidget {
 class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
   String pageTitle = "Smartphones";
   List<Smartphone> smartphones = [];
+  final scrollController = ScrollController();
+  final int entries = 20;
+  int allEntries = 20;
+  bool isLoadingMore = false;
 
   @override
   void initState() {
-    API().fetchRemoteSmartphones().then((smartphones) {
+    API().fetchRemoteSmartphones(0, entries).then((smartphones) {
       setState(() {
         this.smartphones = smartphones;
       });
     });
+    scrollController.addListener((_scrollListener));
     super.initState();
   }
 
@@ -45,16 +50,49 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
           // the App.build method, and use it to set our appbar title.
           title: Text(pageTitle),
         ),
-        body: ListView.separated(itemBuilder: (context, index) {
-          return _buildBrandListTile(index);
-        }, separatorBuilder: (_, __) => Divider(),
-            itemCount: smartphones.length)
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView.separated(itemBuilder: (context, index) {
+            if(index < smartphones!.length){
+              return _buildSmartphoneListTile(index);
+            } else {
+              return _buildProgressTile(index);
+            }
+          }, separatorBuilder: (_, __) => Divider(),
+              itemCount: isLoadingMore ? smartphones!.length +1 : smartphones!.length ,
+          controller: scrollController,
+          physics:  const AlwaysScrollableScrollPhysics(),),
+        )
     );
   }
 
-  Widget _buildBrandListTile(int index) {
+  //Helper Functions
+
+  Widget _buildSmartphoneListTile(int index) {
     final Smartphone currentPhone = smartphones[index];
-    print(currentPhone.picture);
     return ListTile(title: Text(currentPhone.name), leading: Image.network(currentPhone.picture),);
+  }
+
+  Widget _buildProgressTile(int index){
+    return Center(child: CircularProgressIndicator(),);
+  }
+
+  Future<void> _scrollListener() async {
+    if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
+      allEntries = allEntries + entries;
+      setState(() {
+        isLoadingMore = true;
+      });
+      Future.delayed(Duration(seconds: 1), () {
+        API().fetchRemoteSmartphones(allEntries, entries).then((smartphones) {
+          setState(() {
+            this.smartphones = this.smartphones + smartphones;
+          });
+        });
+        setState(() {
+          isLoadingMore = false;
+        });
+      });
+    }
   }
 }

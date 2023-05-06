@@ -6,10 +6,10 @@ class API {
 
   final String _smartphoneRoute = "http://localhost/get.php";
 
-  Future<List<Smartphone>> fetchRemoteSmartphones() async {
+  Future<List<Smartphone>> fetchRemoteSmartphones(int offset, int limit) async {
+    final String url = "$_smartphoneRoute?Lim=$limit&OFF=$offset";
     final response = await http
-        .get(Uri.parse(_smartphoneRoute));
-    print("Jasses fetch");
+        .get(Uri.parse(url));
     if (response.statusCode == 200) {
 
       List<dynamic> data = jsonDecode(response.body);
@@ -17,10 +17,9 @@ class API {
 
       data.forEach((element) => smartphones.add(Smartphone.fromJson(element)));
 
-      print("Jasses ${smartphones.first.name}");
       return smartphones;
     } else {
-      throw Exception('Failed to load characters');
+      throw Exception('Failed to load smartphones');
     }
   }
 }
