@@ -52,26 +52,65 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
           // the App.build method, and use it to set our appbar title.
           title: Text(pageTitle),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.separated(itemBuilder: (context, index) {
-            if(index == 0) {
-              return _buildSearchTile();
-            }
-            if(index -1 < smartphones!.length){
-              return _buildSmartphoneListTile(index -1);
-            } else {
-              return _buildProgressTile(index -1);
-            }
-          }, separatorBuilder: (_, __) => Divider(),
-              itemCount: isLoadingMore ? smartphones!.length +2 : smartphones!.length +1,
-          controller: scrollController,
-          physics:  const AlwaysScrollableScrollPhysics(),),
-        )
+        body: ListView(
+          children: [_buildSearchTile(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  itemCount: isLoadingMore ? smartphones!.length +1 : smartphones!.length,
+                  itemBuilder: (ctx, i) {
+                    if(i  < smartphones!.length){
+                      return _buildCardView(i);
+                    } else {
+                      return _buildProgressTile(i);
+                    }
+                  },
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5,
+                    childAspectRatio: 1.0,
+                    crossAxisSpacing: 0.0,
+                    mainAxisSpacing: 5,
+                    mainAxisExtent: 264,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        controller: scrollController,)
     );
   }
 
   //Helper Functions
+
+  Widget _buildCardView(int index){
+    return Card(
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20)),
+        margin: EdgeInsets.all(5),
+        padding: EdgeInsets.all(5),
+        child:
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                    child: Image.network(
+                      smartphones[index].picture,
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ),
+                ListTile(leading: CircleAvatar(child: Text("3,6")), title: Text(smartphones[index].name), subtitle: Text("Subtitle"), trailing: Icon(Icons.arrow_forward),),
+              ],
+            ),
+      ),
+    );
+  }
 
   Widget _buildSmartphoneListTile(int index) {
     final Smartphone currentPhone = smartphones[index];
@@ -96,6 +135,8 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
     },
     ),);
   }
+
+  
 
   Widget _buildProgressTile(int index){
     return Center(child: CircularProgressIndicator(),);
