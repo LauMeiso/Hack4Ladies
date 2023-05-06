@@ -11,8 +11,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-
-$sql = "SELECT * FROM devices Left Join Brands ON Brands.ID=devices.Brand_ID Left Join scores On Brands.ID = scores.FirmenID ORDER BY devices.ID DESC LIMIT ". $_GET["Lim"]." OFFSET ". $_GET["OFF"]."";
+$GName = $_GET["GName"];
+$sql = "SELECT * FROM devices Left Join Brands ON Brands.ID=devices.Brand_ID Left Join scores On Brands.ID = scores.FirmenID Where devices.name Like '%{$GName}%' ORDER BY devices.ID DESC LIMIT ". $_GET["Lim"]." OFFSET ". $_GET["OFF"]."";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
