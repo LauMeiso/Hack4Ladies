@@ -22,6 +22,10 @@ class Smartphone {
   int faire_arbeitsbedingungen;
   int transparenz;
 
+  double get score {
+    double average = (energie + recycling + langlebigkeit + umweltverschmutzung + soziale_verantwortung + faire_arbeitsbedingungen + transparenz)/7;
+    return average;
+  }
   factory Smartphone.fromJson(Map<String, dynamic> json) {
     return Smartphone(
       name: json['name'],

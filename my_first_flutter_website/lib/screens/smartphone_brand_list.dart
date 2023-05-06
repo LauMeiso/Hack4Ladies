@@ -105,7 +105,7 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
                     ),
                   ),
                 ),
-                ListTile(leading: CircleAvatar(child: Text("3,6")), title: Text(smartphones[index].name), subtitle: Text("Subtitle"), trailing: Icon(Icons.arrow_forward),),
+                ListTile(leading: CircleAvatar(child: Text(smartphones[index].score.toStringAsFixed(1))), title: Text(smartphones[index].name), trailing: Icon(Icons.arrow_forward),),
               ],
             ),
       ),
