@@ -54,6 +54,7 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
 
   Widget _buildBrandListTile(int index) {
     final Smartphone currentPhone = smartphones[index];
-    return ListTile(title: Text(currentPhone.name),);
+    print(currentPhone.picture);
+    return ListTile(title: Text(currentPhone.name), leading: Image.network(currentPhone.picture),);
   }
 }
