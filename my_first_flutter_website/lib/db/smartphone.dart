@@ -27,8 +27,6 @@ class Smartphone {
     return average;
   }
 
-  // Color mycolor = score > 3 ? Colors.green : Colors.red;
-
   factory Smartphone.fromJson(Map<String, dynamic> json) {
     return Smartphone(
       name: json['name'],
