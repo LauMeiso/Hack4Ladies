@@ -38,6 +38,7 @@ dependencies:
   http: ^0.13.6
   mysql1: ^0.20.0
   radio_grouped_buttons: ^1.0.1
+  syncfusion_flutter_charts: ^21.2.3
 
 dev_dependencies:
   flutter_test:
