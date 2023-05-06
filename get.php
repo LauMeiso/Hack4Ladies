@@ -3,7 +3,7 @@ header("Access-Control-Allow-Origin: *");
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "smartphones";
+$dbname = "test2";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -12,7 +12,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT name, picture FROM devices LIMIT ". $_GET["Lim"]." OFFSET ". $_GET["OFF"]."";
+$sql = "SELECT * FROM devices Left Join Brands ON Brands.ID=devices.Brand_ID Left Join scores On Brands.ID = scores.FirmenID ORDER BY devices.ID DESC LIMIT ". $_GET["Lim"]." OFFSET ". $_GET["OFF"]."";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
