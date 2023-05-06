@@ -71,7 +71,12 @@ class SmartphoneDetailScreen extends StatelessWidget {
                     ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 40, 0, 0),
-                    child: ListView(children: [ListTile(title: Text("Akku"), subtitle: Text("Hier specs"),), ListTile(title: Text("Mehr"), subtitle: Text("hier specs"),), ListTile(title: Text("Noch mehr"), subtitle: Text("hier specs"),)],),
+                    child: ListView(children: [
+                      //ListTile(title: Text("Veröffentlicht"), subtitle: Text(smartphone.released_at),),
+                      ListTile(title: Text("Akku"), subtitle: Text(smartphone.battery_size),),
+                      ListTile(title: Text("RAM"), subtitle: Text("To-Do, nbsp = non-breaking space"),),
+                      ListTile(title: Text("Auflösung"), subtitle: Text(smartphone.display_resolution),)
+                    ],),
                   )]),)
             )
         ),
