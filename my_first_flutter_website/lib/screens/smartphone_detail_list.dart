@@ -16,11 +16,9 @@ class SmartphoneDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Color> color = <Color>[];
     color.add(Colors.red!);
-    color.add(Colors.grey!);
     color.add(Colors.green!);
 
     final List<double> stops = <double>[];
-    stops.add(-10.0);
     stops.add(0.0);
     stops.add(10.0);
 
@@ -49,7 +47,11 @@ class SmartphoneDetailScreen extends StatelessWidget {
                     padding: EdgeInsets.only(left: 0, right: 0, bottom: 0, top: 20),
                     child: GridView.count(crossAxisCount: 3, children: [Image.network(smartphone.picture,), Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: SfCartesianChart(primaryXAxis: CategoryAxis(), title: ChartTitle(text: "Score Übersicht"), series: <StackedBarSeries<ChartData, String>>[
+                      child: SfCartesianChart(primaryXAxis: CategoryAxis(),
+                                              primaryYAxis: NumericAxis(visibleMinimum:-10,
+                                                                        visibleMaximum:10),
+                                              title: ChartTitle(text: "Score Übersicht"),
+                                              series: <StackedBarSeries<ChartData, String>>[
                         StackedBarSeries<ChartData, String>(
                         // Bind data source
                           dataSource:  <ChartData>[
