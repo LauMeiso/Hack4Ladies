@@ -54,6 +54,14 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
           title: Text(pageTitle),
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: <Color>[Color(0xff33691e), Color(0xff7cb342)]),
+            ),
+          ),
         ),
         body: ListView(
           children: [_buildSortTile(),_buildSearchTile(),
@@ -108,7 +116,16 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
                     ),
                   ),
                 ),
-                ListTile(leading: CircleAvatar(child: Text(smartphones[index].score.toStringAsFixed(1))), title: Text(smartphones[index].name), trailing: Icon(Icons.arrow_forward), onTap: () {
+                ListTile(leading: CircleAvatar(backgroundColor: (smartphones[index].score > 6.0) ? Color(0xff00f533) :
+                                                                (smartphones[index].score <= 6.0 && smartphones[index].score > 2.0) ? Color(0xffa3ff01) :
+                                                                (smartphones[index].score <= 2.0 && smartphones[index].score > -2.0) ? Color(0xffe5dc00) :
+                                                                (smartphones[index].score <= -2.0 && smartphones[index].score > -6.0) ? Color(0xffffa200) :
+                                                                Color(0xfff54401),
+                                                child: Text(smartphones[index].score.toStringAsFixed(1)),
+                                                foregroundColor: Colors.black),
+                          title: Text(smartphones[index].name),
+                          trailing: Icon(Icons.arrow_forward),
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => SmartphoneDetailScreen(smartphone: smartphones[index])),
@@ -163,7 +180,7 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
         enableShape: true,
         buttonSpace: 4,
         buttonColor: Colors.white,
-        selectedColor: Colors.cyan,
+        selectedColor: Color(0xff33691e),
       //  buttonWidth: 350,
       ),
     );
