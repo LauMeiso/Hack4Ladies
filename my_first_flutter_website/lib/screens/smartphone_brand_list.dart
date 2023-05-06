@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter_website/networking/api.dart';
+import 'package:my_first_flutter_website/screens/smartphone_detail_list.dart';
 import 'package:radio_grouped_buttons/custom_buttons/custom_radio_buttons_group.dart';
 
 import '../db/smartphone.dart';
@@ -107,7 +108,12 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
                     ),
                   ),
                 ),
-                ListTile(leading: CircleAvatar(child: Text(smartphones[index].score.toStringAsFixed(1))), title: Text(smartphones[index].name), trailing: Icon(Icons.arrow_forward),),
+                ListTile(leading: CircleAvatar(child: Text(smartphones[index].score.toStringAsFixed(1))), title: Text(smartphones[index].name), trailing: Icon(Icons.arrow_forward), onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SmartphoneDetailScreen(smartphone: smartphones[index])),
+                  );
+                },),
               ],
             ),
       ),
