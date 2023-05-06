@@ -14,7 +14,15 @@ class SmartphoneDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(smartphone.name)),
+      appBar: AppBar(title: Text(smartphone.name),
+                     flexibleSpace: Container(
+                       decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: <Color>[Color(0xff33691e), Color(0xff7cb342)]),
+                        ),
+                      ),),
       body: SafeArea(
         child: Padding(
             padding: const EdgeInsets.all(20.0),
