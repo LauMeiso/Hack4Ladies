@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter_website/networking/api.dart';
+import 'package:radio_grouped_buttons/custom_buttons/custom_radio_buttons_group.dart';
 
 import '../db/smartphone.dart';
 
@@ -23,7 +24,7 @@ class SmartphoneListScreen extends StatefulWidget {
 }
 
 class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
-  String pageTitle = "Smartphones";
+  String pageTitle = "Fairy Tell";
   List<Smartphone> smartphones = [];
   final scrollController = ScrollController();
   final textController = TextEditingController();
@@ -31,10 +32,11 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
   int allEntries = 20;
   bool isLoadingMore = false;
   String search = "";
+  int selection = 0;
 
   @override
   void initState() {
-    API().fetchRemoteSmartphones(0, entries, search: search).then((smartphones) {
+    API().fetchRemoteSmartphones(0, entries, selection, search: search).then((smartphones) {
       setState(() {
         this.smartphones = smartphones;
       });
@@ -53,7 +55,7 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
           title: Text(pageTitle),
         ),
         body: ListView(
-          children: [_buildSearchTile(),
+          children: [_buildSortTile(),_buildSearchTile(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
@@ -112,11 +114,6 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
     );
   }
 
-  Widget _buildSmartphoneListTile(int index) {
-    final Smartphone currentPhone = smartphones[index];
-    return ListTile(title: Text(currentPhone.name), leading: Image.network(currentPhone.picture),);
-  }
-
   Widget _buildSearchTile(){
     return ListTile(title: TextField(controller: textController,textInputAction: TextInputAction.search,
       decoration: InputDecoration(
@@ -125,7 +122,7 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
       hintText: 'Search ',
       contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
     ),onSubmitted: (text) {
-        API().fetchRemoteSmartphones(0,25, search: text).then((smartphones) {
+        API().fetchRemoteSmartphones(0,25, selection, search: text).then((smartphones) {
           setState(() {
             this.search = text;
             this.allEntries = entries;
@@ -134,6 +131,36 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
         });
     },
     ),);
+  }
+
+  List<String> buttonList=[
+    "Energie","Recycling","Langlebigkeit","Umweltverschmutzung","Soziale Verantwortung","Faire Arbeitsbedingungen","Transparenz"];
+  List<int> buttonValue=[
+    0,1,2,3,4,5,6];
+
+  Widget _buildSortTile(){
+    return Container(
+      padding: EdgeInsets.all(10),
+      width: MediaQuery.of(context).size.width,
+      child: CustomRadioButton(
+        buttonLables: buttonList,
+        buttonValues: buttonList,
+        radioButtonValue: (label, value)=> {
+          selection = value,
+          API().fetchRemoteSmartphones(allEntries, entries, selection, search: search).then((smartphones) {
+            setState(() {
+              this.smartphones = smartphones;
+            });
+          }),
+        },
+        horizontal: true,
+        enableShape: true,
+        buttonSpace: 4,
+        buttonColor: Colors.white,
+        selectedColor: Colors.cyan,
+      //  buttonWidth: 350,
+      ),
+    );
   }
 
   
@@ -149,7 +176,7 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
         isLoadingMore = true;
       });
       Future.delayed(Duration(seconds: 1), () {
-        API().fetchRemoteSmartphones(allEntries, entries, search: search).then((smartphones) {
+        API().fetchRemoteSmartphones(allEntries, entries, selection, search: search).then((smartphones) {
           setState(() {
             this.smartphones = this.smartphones + smartphones;
           });
@@ -160,4 +187,5 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
       });
     }
   }
+
 }
