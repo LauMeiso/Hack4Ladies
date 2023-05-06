@@ -12,7 +12,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT name, picture FROM devices LIMIT 10";
+$sql = "SELECT name, picture FROM devices LIMIT ". $_GET["Lim"]." OFFSET ". $_GET["OFF"]."";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
