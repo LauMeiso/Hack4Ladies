@@ -14,6 +14,19 @@ class SmartphoneDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Color> color = <Color>[];
+    color.add(Colors.red!);
+    color.add(Colors.grey!);
+    color.add(Colors.green!);
+
+    final List<double> stops = <double>[];
+    stops.add(-10.0);
+    stops.add(0.0);
+    stops.add(10.0);
+
+    final LinearGradient gradientColors =
+    LinearGradient(colors: color, stops: stops);
+
     return Scaffold(
       appBar: AppBar(title: Text(smartphone.name),
                      flexibleSpace: Container(
@@ -34,7 +47,10 @@ class SmartphoneDetailScreen extends StatelessWidget {
                 ),
                   child: Padding(
                     padding: EdgeInsets.only(left: 0, right: 0, bottom: 0, top: 0),
-                    child: Row(children: [Image.network(smartphone.picture, width: MediaQuery.of(context).size.width / 4,), SfCartesianChart(primaryXAxis: CategoryAxis(), title: ChartTitle(text: "Score Übersicht"), series: <StackedBarSeries<ChartData, String>>[
+                    child: Row(children: [Image.network(smartphone.picture, width: MediaQuery.of(context).size.width / 4,),
+                      SfCartesianChart(primaryXAxis: CategoryAxis(),
+                        title: ChartTitle(text: "Score Übersicht"),
+                        series: <StackedBarSeries<ChartData, String>>[
                       StackedBarSeries<ChartData, String>(
                       // Bind data source
                         dataSource:  <ChartData>[
@@ -48,7 +64,8 @@ class SmartphoneDetailScreen extends StatelessWidget {
 
                         ],
                         xValueMapper: (ChartData sales, _) => sales.categroy,
-                        yValueMapper: (ChartData sales, _) => sales.value
+                        yValueMapper: (ChartData sales, _) => sales.value,
+                        gradient: gradientColors
                     )
                   ],),
                   ]),)
