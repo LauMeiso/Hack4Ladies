@@ -11,8 +11,25 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
+$Auswahl = $_GET["Auswahl"];
 $GName = $_GET["GName"];
-$sql = "SELECT * FROM devices Left Join Brands ON Brands.ID=devices.Brand_ID Left Join scores On Brands.ID = scores.FirmenID Where devices.name Like '%{$GName}%' ORDER BY devices.ID DESC LIMIT ". $_GET["Lim"]." OFFSET ". $_GET["OFF"]."";
+$sql = "SELECT devices.name, devices.picture, devices.ram, devices.display_resolution, devices.battery_size, devices.released_at, devices.camera_pixels ,devices.os, devices.storage,devices.display_size, devices.battery_type, scores.Energie, scores.Recycling, scores.Langlebigkeit, scores.Umweltverschmutzung, scores.Soziale_Verantwortung, scores.Faire_Arbeitsbedingungen, scores.Transparenz  FROM devices Left Join Brands ON Brands.ID=devices.Brand_ID Left Join scores On Brands.ID = scores.FirmenID Where devices.name Like '%{$GName}%' ORDER BY ";
+if ($Auswahl == 0)
+  $sql =   $sql . "Energie	DESC, devices.id DESC";
+else if ($Auswahl == 1)
+  $sql =   $sql . "Recycling	DESC, devices.id DESC ";
+else if ($Auswahl == 2)
+  $sql =   $sql . "Langlebigkeit	DESC, devices.id DESC ";
+else if ($Auswahl == 3)
+  $sql =   $sql . "Umweltverschmutzung	DESC, devices.id DESC ";
+else if ($Auswahl == 4)
+  $sql =   $sql . "Soziale_Verantwortung	DESC, devices.id DESC ";
+else if ($Auswahl == 5)
+  $sql =   $sql . "Faire_Arbeitsbedingungen	DESC, devices.id DESC ";
+else if ($Auswahl == 6)
+  $sql =   $sql . "Transparenz	DESC, devices.id DESC ";
+$sql =  $sql . " LIMIT ". $_GET["Lim"]." OFFSET ". $_GET["OFF"]."";
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

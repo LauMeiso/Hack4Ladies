@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 06. Mai 2023 um 15:44
+-- Erstellungszeit: 06. Mai 2023 um 20:28
 -- Server-Version: 10.4.27-MariaDB
 -- PHP-Version: 8.1.12
 
@@ -29,12 +29,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `scores` (
   `FirmenID` int(11) NOT NULL,
-  `Engergie` int(11) NOT NULL,
+  `Energie` int(11) NOT NULL,
   `Recycling` int(11) NOT NULL,
   `Langlebigkeit` int(11) NOT NULL,
   `Umweltverschmutzung` int(11) NOT NULL,
-  `Soziale Verantwortung` int(11) NOT NULL,
-  `Faire Arbeitsbedingungen` int(11) NOT NULL,
+  `Soziale_Verantwortung` int(11) NOT NULL,
+  `Faire_Arbeitsbedingungen` int(11) NOT NULL,
   `Transparenz` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -42,7 +42,7 @@ CREATE TABLE `scores` (
 -- Daten für Tabelle `scores`
 --
 
-INSERT INTO `scores` (`FirmenID`, `Engergie`, `Recycling`, `Langlebigkeit`, `Umweltverschmutzung`, `Soziale Verantwortung`, `Faire Arbeitsbedingungen`, `Transparenz`) VALUES
+INSERT INTO `scores` (`FirmenID`, `Energie`, `Recycling`, `Langlebigkeit`, `Umweltverschmutzung`, `Soziale_Verantwortung`, `Faire_Arbeitsbedingungen`, `Transparenz`) VALUES
 (1, 1, 2, 3, 4, 5, 6, 7),
 (2, -10, -10, 3, 0, 9, 8, -4),
 (3, 2, -6, -4, 1, 4, 3, 1),
@@ -158,7 +158,7 @@ INSERT INTO `scores` (`FirmenID`, `Engergie`, `Recycling`, `Langlebigkeit`, `Umw
 (113, -2, -1, 5, 8, -10, 5, 10),
 (114, -4, -10, 1, 8, 7, -1, -10),
 (115, 10, 8, 1, 9, 7, -5, -1),
-(116, -1, 10, -3, -7, 0, 6, 3);
+(116, 9, 10, 9, 9, 9, 9, 9);
 
 --
 -- Indizes der exportierten Tabellen
