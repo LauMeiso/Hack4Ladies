@@ -4,7 +4,7 @@ import 'package:my_first_flutter_website/db/smartphone.dart';
 
 class API {
 
-  final String _smartphoneRoute = "http://localhost/get.php";
+  final String _smartphoneRoute = "/get.php";
 
   Future<List<Smartphone>> fetchRemoteSmartphones(int offset, int limit, {String search = ""}) async {
     final String url = "$_smartphoneRoute?GName=$search&Lim=$limit&OFF=$offset";

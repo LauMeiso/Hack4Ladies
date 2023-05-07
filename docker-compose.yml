@@ -1,0 +1,34 @@
+version: '3'
+
+name: hack-ladies
+
+services:
+  mysql:
+    container_name: hack-db
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    image: hack-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=database
+    ports:
+      - 3306:3306
+
+  php_myadmin:
+    container_name: hack-phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOST=hack-db
+      - PMA_PORT=3306
+    ports:
+      - 12345:80
+
+  flutter:
+    container_name: hack-flutter
+    build:
+      context: ./my_first_flutter_website
+      dockerfile: Dockerfile
+    image: hack-flutter
+    ports:
+      - 1234:80
