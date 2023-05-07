@@ -53,6 +53,10 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
           title: Text(pageTitle),
+          actions: [Padding(padding: EdgeInsets.only(right: 50.0),
+                            child: IconButton(icon:Icon(Icons.info),
+                                              tooltip: 'Nachhaltigkeitsziele',
+                                              onPressed: () {}))],
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
