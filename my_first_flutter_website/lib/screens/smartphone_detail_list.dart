@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import '../extensions/string_extension.dart';
 
 import '../db/smartphone.dart';
 
@@ -19,8 +20,8 @@ class SmartphoneDetailScreen extends StatelessWidget {
     color.add(Colors.green!);
 
     final List<double> stops = <double>[];
-    stops.add(0.0);
-    stops.add(10.0);
+    stops.add(-5.0);
+    stops.add(5.0);
 
     final LinearGradient gradientColors =
     LinearGradient(colors: color, stops: stops);
@@ -72,10 +73,17 @@ class SmartphoneDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 40, 0, 0),
                     child: ListView(children: [
-                      //ListTile(title: Text("Veröffentlicht"), subtitle: Text(smartphone.released_at),),
-                      ListTile(title: Text("Akku"), subtitle: Text(smartphone.battery_size),),
-                      ListTile(title: Text("RAM"), subtitle: Text("To-Do, nbsp = non-breaking space"),),
-                      ListTile(title: Text("Auflösung"), subtitle: Text(smartphone.display_resolution),)
+                      ListTile(title: Text("Veröffentlicht"), subtitle: Text(smartphone.released_at),),
+                      ListTile(title: Text("Betriebssystem"), subtitle: Text(smartphone.os),),
+                      ListTile(title: Text("Akku"),
+                        subtitle: Text("Größe: ${smartphone.battery_size} \n"
+                                       "Art: ${smartphone.battery_type}"),),
+                      ListTile(title: Text("RAM"), subtitle: Text(smartphone.ram.nonBreaking),),
+                      ListTile(title: Text("Speicher"), subtitle: Text(smartphone.storage),),
+                      ListTile(title: Text("Display"),
+                        subtitle: Text("Auflösung: ${smartphone.display_resolution} \n "
+                                       "Größe: ${smartphone.display_resolution}"),),
+                      ListTile(title: Text("Kamera"), subtitle: Text(smartphone.camera_pixels),)
                     ],),
                   )]),)
             )

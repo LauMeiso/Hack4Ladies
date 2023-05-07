@@ -4,8 +4,13 @@ class Smartphone {
     required this.picture,
     required this.ram,
     required this.battery_size,
+    required this.battery_type,
+    required this.display_size,
     required this.display_resolution,
-    //required this.released_at,
+    required this.released_at,
+    required this.storage,
+    required this.os,
+    required this.camera_pixels,
 
     required this.energie,
     required this.recycling,
@@ -19,8 +24,13 @@ class Smartphone {
   String picture;
   String ram;
   String battery_size;
+  String battery_type;
   String display_resolution;
-  //String released_at;
+  String display_size;
+  String released_at;
+  String storage;
+  String os;
+  String camera_pixels;
 
   int energie;
   int recycling;
@@ -41,8 +51,13 @@ class Smartphone {
       picture: json['picture'],
       ram: json['ram'],
       battery_size: json['battery_size'],
+      battery_type: json['battery_type'],
       display_resolution: json['display_resolution'],
-      //released_at: json['released_at'],
+      display_size: json['display_size'],
+      released_at: json['released_at'],
+      storage: json['storage'],
+      os: json['os'],
+      camera_pixels: json['camera_pixels'],
 
       energie: int.parse(json['Energie']),
       recycling: int.parse(json['Recycling']),
