@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.lightGreen,
+        scaffoldBackgroundColor: Color(0xffe2dfd6)
       ),
       home: const SmartphoneListScreen(title: 'Flutter Demo Home Page'),
     );

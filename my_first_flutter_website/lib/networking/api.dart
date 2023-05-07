@@ -6,8 +6,8 @@ class API {
 
   final String _smartphoneRoute = "http://localhost/get.php";
 
-  Future<List<Smartphone>> fetchRemoteSmartphones(int offset, int limit, {String search = ""}) async {
-    final String url = "$_smartphoneRoute?GName=$search&Lim=$limit&OFF=$offset";
+  Future<List<Smartphone>> fetchRemoteSmartphones(int offset, int limit, int selection, {String search = ""}) async {
+    final String url = "$_smartphoneRoute?Auswahl=$selection&GName=$search&Lim=$limit&OFF=$offset";
     final response = await http
         .get(Uri.parse(url));
     if (response.statusCode == 200) {

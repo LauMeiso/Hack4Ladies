@@ -2,6 +2,10 @@ class Smartphone {
   Smartphone({
     required this.name,
     required this.picture,
+    required this.ram,
+    required this.battery_size,
+    required this.display_resolution,
+    //required this.released_at,
 
     required this.energie,
     required this.recycling,
@@ -13,6 +17,10 @@ class Smartphone {
 });
   String name;
   String picture;
+  String ram;
+  String battery_size;
+  String display_resolution;
+  //String released_at;
 
   int energie;
   int recycling;
@@ -26,10 +34,15 @@ class Smartphone {
     double average = (energie + recycling + langlebigkeit + umweltverschmutzung + soziale_verantwortung + faire_arbeitsbedingungen + transparenz)/7;
     return average;
   }
+
   factory Smartphone.fromJson(Map<String, dynamic> json) {
     return Smartphone(
       name: json['name'],
       picture: json['picture'],
+      ram: json['ram'],
+      battery_size: json['battery_size'],
+      display_resolution: json['display_resolution'],
+      //released_at: json['released_at'],
 
       energie: int.parse(json['Energie']),
       recycling: int.parse(json['Recycling']),
