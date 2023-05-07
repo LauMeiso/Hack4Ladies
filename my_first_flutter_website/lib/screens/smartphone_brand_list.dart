@@ -215,11 +215,7 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
   }
 
   int get gridCount {
-    if (kIsWeb) {
-      return 5;
-    } else {
-      return 1;
-    }
+    return 5;
   }
 
 }
