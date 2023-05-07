@@ -20,8 +20,7 @@ RUN flutter build web --web-renderer html --release
 # Stage 2 - Create the run-time image
 FROM php:8.0-apache
 WORKDIR /var/www/html
-
-COPY nginx/get.php get.php
+# COPY get.php /var/www/html/
 COPY --from=build-env /app/build/web /var/www/html
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 EXPOSE 80

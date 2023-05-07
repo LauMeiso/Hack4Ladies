@@ -12,17 +12,13 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=database
-    ports:
-      - 3306:3306
-
-  php_myadmin:
-    container_name: hack-phpmyadmin
-    image: phpmyadmin/phpmyadmin
-    environment:
-      - PMA_HOST=hack-db
-      - PMA_PORT=3306
-    ports:
-      - 12345:80
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=123456
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-p123456"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
 
   flutter:
     container_name: hack-flutter
@@ -32,3 +28,5 @@ services:
     image: hack-flutter
     ports:
       - 1234:80
+    depends_on:
+      - mysql
