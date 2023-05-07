@@ -219,6 +219,9 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
   }
 
   int get gridCount {
+    if(MediaQuery.of(context).size.width < 500 ) {
+      return 1;
+    }
     return 5;
   }
 
