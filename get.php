@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 $Auswahl = $_GET["Auswahl"];
 $GName = $_GET["GName"];
-$sql = "SELECT devices.name, devices.picture, devices.ram, devices.display_resolution, devices.battery_size, scores.Energie, scores.Recycling, scores.Langlebigkeit, scores.Umweltverschmutzung, scores.Soziale_Verantwortung, scores.Faire_Arbeitsbedingungen, scores.Transparenz  FROM devices Left Join Brands ON Brands.ID=devices.Brand_ID Left Join scores On Brands.ID = scores.FirmenID Where devices.name Like '%{$GName}%' ORDER BY ";
+$sql = "SELECT devices.name, devices.picture, devices.ram, devices.display_resolution, devices.battery_size, devices.released_at, devices.camera_pixels ,devices.os, devices.storage,devices.display_size, devices.battery_type, scores.Energie, scores.Recycling, scores.Langlebigkeit, scores.Umweltverschmutzung, scores.Soziale_Verantwortung, scores.Faire_Arbeitsbedingungen, scores.Transparenz  FROM devices Left Join Brands ON Brands.ID=devices.Brand_ID Left Join scores On Brands.ID = scores.FirmenID Where devices.name Like '%{$GName}%' ORDER BY ";
 if ($Auswahl == 0)
   $sql =   $sql . "Energie	DESC";
 else if ($Auswahl == 1)
