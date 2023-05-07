@@ -15,16 +15,15 @@ class SmartphoneDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Color> color = <Color>[];
-    color.add(Colors.red!);
-    color.add(Colors.green!);
-
-    final List<double> stops = <double>[];
-    stops.add(-5.0);
-    stops.add(5.0);
-
-    final LinearGradient gradientColors =
-    LinearGradient(colors: color, stops: stops);
+    final List<ChartData> chartData = [
+      ChartData('Energie', smartphone.energie, Color(0xffe5db01)),
+      ChartData('Recycling', smartphone.recycling, Color(0xff664f41)),
+      ChartData('Langlebigkeit', smartphone.langlebigkeit, Color(0xffe67a00)),
+      ChartData('Umweltverschmutzung', smartphone.umweltverschmutzung, Color(0xff42b315)),
+      ChartData('Soziale Verantwortung', smartphone.soziale_verantwortung, Color(0xffe52f8f)),
+      ChartData('Faire Arbeitsbedingungen', smartphone.faire_arbeitsbedingungen, Color(0xffa960e6)),
+      ChartData('Transparenz', smartphone.transparenz, Color(0xff2b94e6))
+    ];
 
     return Scaffold(
       appBar: AppBar(title: Text(smartphone.name),
@@ -48,25 +47,17 @@ class SmartphoneDetailScreen extends StatelessWidget {
                     padding: EdgeInsets.only(left: 0, right: 0, bottom: 0, top: 20),
                     child: GridView.count(crossAxisCount: 3, children: [Image.network(smartphone.picture,), Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: SfCartesianChart(primaryXAxis: CategoryAxis(),
+                      child: SfCartesianChart(primaryXAxis: CategoryAxis(isInversed: true),
                                               primaryYAxis: NumericAxis(visibleMinimum:-10,
                                                                         visibleMaximum:10),
                                               title: ChartTitle(text: "Score Übersicht"),
                                               series: <StackedBarSeries<ChartData, String>>[
                         StackedBarSeries<ChartData, String>(
                         // Bind data source
-                          dataSource:  <ChartData>[
-                            ChartData('Energie', smartphone.energie),
-                            ChartData('Recycling', smartphone.recycling),
-                            ChartData('Langlebigkeit', smartphone.langlebigkeit),
-                            ChartData('Umweltverschmutzung', smartphone.umweltverschmutzung),
-                            ChartData('Soziale Verantwortung', smartphone.soziale_verantwortung),
-                            ChartData('Faire Arbeitsbedingungen', smartphone.faire_arbeitsbedingungen),
-                            ChartData('Transparenz', smartphone.transparenz)
-                          ],
+                          dataSource:  chartData,
                           xValueMapper: (ChartData sales, _) => sales.categroy,
                           yValueMapper: (ChartData sales, _) => sales.value,
-                          gradient: gradientColors
+                          pointColorMapper: (ChartData sales, _) => sales.color
                       )
                   ],),
                     ),
@@ -94,9 +85,10 @@ class SmartphoneDetailScreen extends StatelessWidget {
 }
 
 class ChartData {
-  ChartData(this.categroy, this.value);
+  ChartData(this.categroy, this.value, this.color);
   final String categroy;
   final int value;
+  final Color? color;
 }
 
 
