@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter_website/networking/api.dart';
 import 'package:my_first_flutter_website/screens/smartphone_detail_list.dart';
 import 'package:radio_grouped_buttons/custom_buttons/custom_radio_buttons_group.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../db/smartphone.dart';
 
@@ -67,6 +70,7 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
           ),
         ),
         body: ListView(
+          controller: scrollController,
           children: [_buildSortTile(),_buildSearchTile(),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -81,9 +85,10 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
                     } else {
                       return _buildProgressTile(i);
                     }
+
                   },
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 5,
+                    crossAxisCount: gridCount,
                     childAspectRatio: 1.0,
                     crossAxisSpacing: 0.0,
                     mainAxisSpacing: 5,
@@ -92,8 +97,7 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
                 ),
               ),
             ),
-          ],
-        controller: scrollController,)
+          ],)
     );
   }
 
@@ -211,6 +215,14 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
           isLoadingMore = false;
         });
       });
+    }
+  }
+
+  int get gridCount {
+    if (kIsWeb) {
+      return 5;
+    } else {
+      return 1;
     }
   }
 
