@@ -46,7 +46,6 @@ class _SmartphoneListScreenState extends State<SmartphoneListScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
